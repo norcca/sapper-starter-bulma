@@ -1,28 +1,29 @@
-import posts from './_posts.js';
+import * as contentful from "contentful";
 
-const lookup = new Map();
-posts.forEach(post => {
-	lookup.set(post.slug, JSON.stringify(post));
+const client = contentful.createClient({
+	space: "7cfl0e0jzy11",
+	accessToken: "m8B1CUEuKGUEK8oLN4vZCiss6CVA5pWYaY5RNn5SKYU"
 });
 
-export function get(req, res, next) {
+export async function get(req, res, next) {
 	// the `slug` parameter is available because
 	// this file is called [slug].json.js
 	const { slug } = req.params;
 
-	if (lookup.has(slug)) {
+	try {
+		const entry = await client.getEntry(slug);
 		res.writeHead(200, {
 			'Content-Type': 'application/json'
 		});
 
-		res.end(lookup.get(slug));
-	} else {
+		res.end(JSON.stringify(entry.fields));
+	} catch (err) {
 		res.writeHead(404, {
 			'Content-Type': 'application/json'
 		});
 
 		res.end(JSON.stringify({
-			message: `Not found`
+			message: err
 		}));
 	}
 }

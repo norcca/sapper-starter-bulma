@@ -15,14 +15,26 @@
 		margin: 0 0 1em 0;
 		line-height: 1.5;
 	}
+
+	.contentful-logo {
+		height: 1em !important;
+		vertical-align: text-bottom;
+	}
 </style>
 
 <svelte:head>
-	<title>Blog</title>
+	<title>Blog using Contentful</title>
 </svelte:head>
 
 <div class="content">
-	<h1>Recent posts</h1>
+	<h1>Blog using <img
+		class="contentful-logo" 
+		src="https://d21buns5ku92am.cloudfront.net/41748/images/265844-logo-black_700x149-2e0d38-original-1511779631.png" 
+		alt="contentful"
+		>
+	</h1>
+
+	<h2>Recent posts</h2>
 
 	<ul>
 		{#each posts as post}
@@ -30,7 +42,7 @@
 					tell Sapper to load the data for the page as soon as
 					the user hovers over the link or taps it, instead of
 					waiting for the 'click' event -->
-			<li><a rel='prefetch' href='blog/{post.slug}'>{post.title}</a></li>
+			<li><a rel='prefetch' href='blog/{post.id}'>{post.title}</a></li>
 		{/each}
 	</ul>
 </div>

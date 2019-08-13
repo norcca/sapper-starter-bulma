@@ -14,6 +14,8 @@
 </script>
 
 <script>
+	import { documentToHtmlString } from "@contentful/rich-text-html-renderer";
+
 	export let post;
 </script>
 
@@ -58,7 +60,5 @@
 </svelte:head>
 
 <div class="content">
-	<h1>{post.title}</h1>
-
-	{@html post.html}
+	{@html documentToHtmlString(post.content)}
 </div>
